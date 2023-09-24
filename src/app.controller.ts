@@ -1,12 +1,16 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller('alunos')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get(':id')
+  getHello(): object {
+    const aluno = {
+      id: '1',
+      nome: 'Bastiao'
+    };
+    return aluno;
   }
 }
