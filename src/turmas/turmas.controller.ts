@@ -8,8 +8,8 @@ export class TurmasController {
   constructor(private readonly turmasService: TurmasService) {}
 
   @Post()
-  create(@Body() createTurmaDto: CreateTurmaDto) {
-    return this.turmasService.create(createTurmaDto);
+  async create(@Body() createTurmaDto: CreateTurmaDto) {
+    return await this.turmasService.create(createTurmaDto);
   }
 
   @Get()

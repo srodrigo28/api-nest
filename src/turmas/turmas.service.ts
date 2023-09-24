@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTurmaDto } from './dto/create-turma.dto';
 import { UpdateTurmaDto } from './dto/update-turma.dto';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Turma } from './entities/turma.entity';
 
 @Injectable()
 export class TurmasService {
-  create(createTurmaDto: CreateTurmaDto) {
-    return 'This action adds a new turma';
+
+  constructor(
+    @InjectRepository(Turma)
+    private repository: Repository<Turma>
+  ){}
+  
+  async create(createTurmaDto: CreateTurmaDto) {
+    const turma = this.repository.create(createTurmaDto);
+    return await this.repository.save(turma);
   }
 
   findAll() {
-    return `This action returns all turmas`;
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} turma`;
+  async findOne(id: number) {
+    return await this.repository.findOneBy({id});
   }
 
-  update(id: number, updateTurmaDto: UpdateTurmaDto) {
-    return `This action updates a #${id} turma`;
+  async update(id: number, updateTurmaDto: UpdateTurmaDto) {
+    return await this.repository.update(id, updateTurmaDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} turma`;
+  async remove(id: number) {
+    return await this.repository.delete(id);
   }
 }

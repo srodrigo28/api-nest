@@ -1,1 +1,3 @@
-export class CreateTurmaDto {}
+export class CreateTurmaDto {
+    descricao: string;
+}

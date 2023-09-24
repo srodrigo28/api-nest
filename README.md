@@ -41,7 +41,7 @@ npm i typeorm-naming-strategies
 
 * app.modules.ts --> configurando o modulo typeORM e banco de dados
 
-#### Memoraveis Modulo 3.
+#### Memoraveis Modulo 3. configurando tabelas entitidades
 * Modulo principal
 ```
 import { Module } from '@nestjs/common';
@@ -147,7 +147,47 @@ export class Turma {
 
 ```
 
-#### Memoraveis Modlo 4.
+#### Memoraveis Modlo 4 efetuando crud service.
+
+* alunos modules ts
+```
+import { Module } from '@nestjs/common';
+import { AlunosService } from './alunos.service';
+import { AlunosController } from './alunos.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Aluno } from './entities/aluno.entity';
+
+@Module({
+  imports: [TypeOrmModule.forFeature([Aluno])],
+  controllers: [AlunosController],
+  providers: [AlunosService],
+})
+export class AlunosModule {}
+```
+
+* alunos services ts
+```
+import { Injectable } from '@nestjs/common';
+import { CreateAlunoDto } from './dto/create-aluno.dto';
+import { UpdateAlunoDto } from './dto/update-aluno.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Aluno } from './entities/aluno.entity';
+import { Repository } from 'typeorm';
+
+@Injectable()
+export class AlunosService {
+
+  constructor(
+    @InjectRepository(Aluno)
+    private repository: Repository<Aluno>,
+  ) {}
+
+  findAll() {
+    return this.repository.find();
+  }
+  
+}
+```
 
 ### Comandos Nest
 

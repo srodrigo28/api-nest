@@ -8,8 +8,8 @@ export class AlunosController {
   constructor(private readonly alunosService: AlunosService) {}
 
   @Post()
-  create(@Body() createAlunoDto: CreateAlunoDto) {
-    return this.alunosService.create(createAlunoDto);
+  async create(@Body() createAlunoDto: CreateAlunoDto) {
+    return await this.alunosService.create(createAlunoDto);
   }
 
   @Get()

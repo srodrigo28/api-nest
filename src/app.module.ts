@@ -6,6 +6,8 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AlunosModule } from './alunos/alunos.module';
 import { TurmasModule } from './turmas/turmas.module';
 import { join } from 'path';
+import { CategoriaModule } from './categoria/categoria.module';
+import { ProdutosModule } from './produtos/produtos.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { join } from 'path';
     }),
     AlunosModule,
     TurmasModule,
+    CategoriaModule,
+    ProdutosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
