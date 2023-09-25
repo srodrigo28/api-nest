@@ -48,6 +48,11 @@ npm i class-validator class-transformer
 npm i nestjs-typeorm-paginate
 ```
 
+* Gerando Links
+```
+npm i nestjs-url-generator --legacy-peer-deps
+```
+
 ### Arquivos trabalhados
 
 * app.modules.ts --> configurando o modulo typeORM e banco de dados
@@ -220,6 +225,18 @@ export class CreateProdutoDto {
 ```
 npm i nestjs-typeorm-paginate
 ```
+
+* modificados
+  * controller.
+  * services
+
+#### Hateoas 8. 
+* Criado pasta core e arquivos
+* Gerando Links
+```
+npm i nestjs-url-generator --legacy-peer-deps
+```
+* atualizado o app-module.ts
 ### Comandos Nest
 
 * Criando

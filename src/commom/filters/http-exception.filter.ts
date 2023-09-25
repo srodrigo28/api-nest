@@ -11,10 +11,18 @@ export class HttpExceptionFilter implements ExceptionFilter{
         if(exception instanceof InternalServerErrorException){
             response.status(500).send({
                 statusCode: 500,
-                message: 'Erro interno no servidor Offline, Suporte(62) 98592-1140',
+                message: 'Erro interno no servidor Offline Op1, Suporte(62) 98592-1140',
                 error: exception.name
             });
             
+        }
+
+        if(exception.name === 'QueryFailedError' || exception.name === 'TypeError'){
+            return  response.status(400).send({
+                statusCode: 400,
+                message: 'Bad Request, Op2 Suporte(62) 98592-1140',
+                error: exception.name
+            });
         }
 
         response.status(exception.getStatus()).send(exception);

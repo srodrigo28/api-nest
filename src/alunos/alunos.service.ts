@@ -32,7 +32,6 @@ export class AlunosService {
     .leftJoinAndSelect('aluno.turma', 'turma')
     .orderBy('aluno.id', 'ASC')
 
-
     return await paginate(query, options);
   }
 
@@ -43,17 +42,16 @@ export class AlunosService {
       console.log(error.name);
       if(error.name === 'EntityNotFoundError'){
         throw new HttpException(
-          'Aluno não encontrado',HttpStatus.NOT_FOUND
+          'Aluno não encontrado', HttpStatus.NOT_FOUND
         );
       }
-      throw new HttpException(
-        'Erro Interno servidor Offline', HttpStatus.INTERNAL_SERVER_ERROR
-      );
     }
   }
 
   async update(id: number, updateAlunoDto: UpdateAlunoDto) {
-      return await this.repository.update(id, updateAlunoDto);
+      const response = await this.repository.update(id, updateAlunoDto);
+      if(response.affected === 0) throw new AlunoNotFoundException();
+      return {message: 'Atualizado com sucesso'};
   }
 
   async remove(id: number) {
@@ -63,6 +61,6 @@ export class AlunosService {
       throw new AlunoNotFoundException();
     }
 
-    return await this.repository.delete({id});
+    return { message: 'Excluido com sucesso' };
   }
 }

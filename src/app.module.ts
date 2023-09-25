@@ -8,6 +8,10 @@ import { TurmasModule } from './turmas/turmas.module';
 import { join } from 'path';
 import { CategoriaModule } from './categoria/categoria.module';
 import { ProdutosModule } from './produtos/produtos.module';
+import { UrlGeneratorModule } from 'nestjs-url-generator';
+import { HateoasIndex } from './core/index-hateoas';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './commom/filters/http-exception.filter';
 
 @Module({
   imports: [
@@ -26,9 +30,19 @@ import { ProdutosModule } from './produtos/produtos.module';
     TurmasModule,
     CategoriaModule,
     ProdutosModule,
+    UrlGeneratorModule.forRoot({
+      appUrl: 'http://localhost:3000'
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    HateoasIndex,
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    }
+  ],
 })
 
 export class AppModule {}

@@ -8,7 +8,6 @@ export class CreateAlunoDto {
     @IsString({ message: "Nome deve ser uma string" })
     @Length(3, 30, { message: "Nome precisa ter no minimo 3 caractéries e máximo 30"})
     @Expose({ name: 'nome_completo' })
-    @Transform(( { value }) => value.toLowerCase())
     nome: string;
 
     @IsNotEmpty({ message: "Genero não cadastrar em branco"})
@@ -16,8 +15,7 @@ export class CreateAlunoDto {
     @Length(3, 30, { message: "Nome precisa ter no minimo 3 caractéries e máximo 30"})
     genero: string;
 
-    @IsNotEmpty({ message: "Não posso cadastrar aluno sem uma turma"})
+    @IsNotEmpty({ message: "Turma não cadastrar em branco"})
     @IsString({ message: "Turma deve ser uma string" })
-    @Length(3, 30, { message: "Turma precisa ter no minimo 3 caractéries e máximo 30"})
     turma: Turma;
 }
