@@ -33,8 +33,14 @@ npm run start
 npm i typeorm @nestjs/typeorm mysql2
 ```
 
+* TypeORM Strategies
 ```
 npm i typeorm-naming-strategies
+```
+
+* Validação
+```
+npm i class-validator class-transformer
 ```
 
 ### Arquivos trabalhados
@@ -149,43 +155,55 @@ export class Turma {
 
 #### Memoraveis Modlo 4 efetuando crud service.
 
-* alunos modules ts
-```
-import { Module } from '@nestjs/common';
-import { AlunosService } from './alunos.service';
-import { AlunosController } from './alunos.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Aluno } from './entities/aluno.entity';
+#### Trabalhando com validações
 
-@Module({
-  imports: [TypeOrmModule.forFeature([Aluno])],
-  controllers: [AlunosController],
-  providers: [AlunosService],
-})
-export class AlunosModule {}
+* Validação
+```
+npm i class-validator class-transformer
 ```
 
-* alunos services ts
+* main.ts
 ```
-import { Injectable } from '@nestjs/common';
-import { CreateAlunoDto } from './dto/create-aluno.dto';
-import { UpdateAlunoDto } from './dto/update-aluno.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Aluno } from './entities/aluno.entity';
-import { Repository } from 'typeorm';
+import { NestFactory, Reflector } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 
-@Injectable()
-export class AlunosService {
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  await app.listen(3000);
+}
+bootstrap();
 
-  constructor(
-    @InjectRepository(Aluno)
-    private repository: Repository<Aluno>,
-  ) {}
+```
 
-  findAll() {
-    return this.repository.find();
-  }
-  
+* produtos dto ts
+```
+import { IsNotEmpty, IsString, IsNumber, Length, Min, Max } from "class-validator"
+
+export class CreateProdutoDto {
+
+    @IsNotEmpty( {message: "Esse campo nome não pode ser em branco!" } )
+    @IsString( {message: "Esse campo precisa ser string ou texto"} )
+    @Length( 3, 30, {message: "Esse campo precisa ter pelo menos 3 ou máximo 30 caractéries"} )
+    nome: string;
+
+    @IsNotEmpty( {message: "Esse campo descrição não pode ser em branco!" } )
+    @IsString( {message: "Esse campo precisa ser string ou texto"} )
+    @Length( 3, 30, {message: "Esse campo precisa ter pelo menos 3 ou máximo 30 caractéries"} )
+    descricao: string;
+
+    @IsNotEmpty( {message: "Esse campo quantidade não pode ser em branco!" } )
+    @IsNumber( {}, {message: "Preço de uma quantidade inicial"} )
+    @Min(1)
+    @Max(9999)
+    quantidade: number;
+
+    @IsNotEmpty( {message: "Esse campo preço ou valor não pode ser em branco!" } )
+    @IsNumber( {}, {message: "Preço de um preço ou valor inicial"} )
+    @Min(1)
+    valor: number
 }
 ```
 
