@@ -243,3 +243,9 @@ npm i nestjs-url-generator --legacy-peer-deps
 ```
 npx nest g res alunos
 ```
+
+#### Swagger documnetação 9.
+* swagger
+```
+npm install --save @nestjs/swagger swagger-ui-express --legacy-peer-deps
+```

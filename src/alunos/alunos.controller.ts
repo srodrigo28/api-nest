@@ -4,7 +4,9 @@ import { CreateAlunoDto } from './dto/create-aluno.dto';
 import { UpdateAlunoDto } from './dto/update-aluno.dto';
 import { ResponseAlunoDto } from './dto/response-aluno.dto';
 import { HateoasAluno } from 'src/core/aluno-hateoas';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('alunos')
 @Controller('alunos')
 export class AlunosController {
   constructor(

@@ -11,6 +11,6 @@ export class AppController {
 
   @Get()
   index(){
-    return this.haeoasIndex.gerarLinksHateoas();
+    return this.haeoasIndex.gerarLinksHateoas;
   }
 }
