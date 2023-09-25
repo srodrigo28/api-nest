@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Aluno } from './entities/aluno.entity';
 import { Repository } from 'typeorm';
 import { AlunoNotFoundException } from './exceptions/AlunoNotFoundException';
+import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class AlunosService {
@@ -25,12 +26,14 @@ export class AlunosService {
   }
   */
  
-  findAll() {
-    return this.repository.find({
-      relations: {
-        turma: true
-      }
-    });
+  async findAll(options: IPaginationOptions) {
+    const query = this.repository
+    .createQueryBuilder('aluno')
+    .leftJoinAndSelect('aluno.turma', 'turma')
+    .orderBy('aluno.id', 'ASC')
+
+
+    return await paginate(query, options);
   }
 
   async findOne(id: number) {

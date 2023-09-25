@@ -13,8 +13,11 @@ export class HttpExceptionFilter implements ExceptionFilter{
                 statusCode: 500,
                 message: 'Erro interno no servidor Offline, Suporte(62) 98592-1140',
                 error: exception.name
-            })
+            });
+            
         }
+
+        response.status(exception.getStatus()).send(exception);
     }
 
 

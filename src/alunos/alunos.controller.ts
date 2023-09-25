@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { AlunosService } from './alunos.service';
 import { CreateAlunoDto } from './dto/create-aluno.dto';
 import { UpdateAlunoDto } from './dto/update-aluno.dto';
@@ -13,8 +13,9 @@ export class AlunosController {
   }
 
   @Get()
-  findAll() {
-    return this.alunosService.findAll();
+  findAll(@Query('page') page=1, @Query('limit') limit = 2 ) {
+    limit = limit > 2 ? 2 : limit;
+    return this.alunosService.findAll({ page, limit });
   }
 
   @Get(':id')

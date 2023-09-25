@@ -43,6 +43,11 @@ npm i typeorm-naming-strategies
 npm i class-validator class-transformer
 ```
 
+* Paginação
+```
+npm i nestjs-typeorm-paginate
+```
+
 ### Arquivos trabalhados
 
 * app.modules.ts --> configurando o modulo typeORM e banco de dados
@@ -207,6 +212,14 @@ export class CreateProdutoDto {
 }
 ```
 
+#### Exceptions 6.
+
+#### Paginação 7.
+
+* Paginação
+```
+npm i nestjs-typeorm-paginate
+```
 ### Comandos Nest
 
 * Criando
